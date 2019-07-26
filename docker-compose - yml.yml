@@ -1,0 +1,29 @@
+version: '3'
+services:
+  crudApp:
+    image: docker7004/jnit1:latest
+    container_name: crudapp
+    ports:
+      - 4000:8080
+    environment:
+      MYSQL_DB_HOST: mysql:3306
+      MYSQL_DB_USER: root
+      MYSQL_DB_PASSWORD: supersecret
+      MYSQL_DB_NAME: crudApp
+    volumes:
+      - crudapp-volume:/var/lib/crudapp
+    depends_on:
+      - mysql
+  mysql:
+    image: docker7004/jnit:version1.0
+    container_name: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+    volumes:
+      - mysql-volume:/var/lib/mysql
+volumes:
+  crudapp-volume:
+  mysql-volume:
